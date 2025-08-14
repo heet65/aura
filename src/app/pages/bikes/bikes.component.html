@@ -1,0 +1,33 @@
+<h1>Vintage Bikes Collection</h1>
+
+<div class="container">
+  <div class="bike-card" *ngFor="let bike of bikes">
+    <img [src]="bike.img" [alt]="bike.name">
+    <h3>{{ bike.name }}</h3>
+    <p class="bike-info">{{ bike.desc }}</p>
+    <div class="bike-buttons">
+      <button (click)="showInfo(bike)">Information</button>
+      <button (click)="bookRide(bike)">Book Ride</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" [style.display]="modalOpen ? 'block' : 'none'">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <div *ngIf="modalContent" [innerHTML]="modalContent"></div>
+
+    <!-- Form (shown when selectedBike is set) -->
+    <div *ngIf="selectedBike && modalContent.includes('Book') || modalContent.includes('Quotation')">
+      <input type="text" placeholder="Your Name" #name>
+      <input type="tel" placeholder="Phone Number" #phone>
+      <button class="submit-btn" (click)="submit(name.value, phone.value, modalContent.includes('Book') ? 'test ride' : 'quotation')">Submit</button>
+    </div>
+
+    <!-- Quotation button on Info modal -->
+    <div *ngIf="modalContent.includes(selectedBike?.desc)">
+      <button class="submit-btn" (click)="getQuotation(selectedBike)">Get Quotation</button>
+    </div>
+  </div>
+</div>

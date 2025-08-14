@@ -1,0 +1,44 @@
+<h1>Vintage Cars Collection</h1>
+
+<div *ngFor="let car of cars" class="car-card">
+  <img [src]="car.image" [alt]="car.name" />
+  <h2>{{ car.name }}</h2>
+  <p>{{ car.description }}</p>
+  <div class="buttons">
+    <button class="info-btn" (click)="openModal('info', car)">Information</button>
+    <button class="test-ride-btn" (click)="openModal('ride', car)">Book Test Ride</button>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal" [style.display]="modalOpen ? 'block' : 'none'" (click)="closeModal($event)">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <div id="modal-body">
+      <ng-container [ngSwitch]="modalMode">
+        <div *ngSwitchCase="'info'" [innerHTML]="modalContent"></div>
+        <div *ngSwitchCase="'ride'">
+          <h3>Book Test Ride for {{ currentCar?.name }}</h3>
+          <form (submit)="submitForm($event)">
+            <label for="name">Name:</label>
+            <input type="text" id="name" required [(ngModel)]="formData.name" name="name" />
+            <label for="contact">Contact Number:</label>
+            <input type="tel" id="contact" required [(ngModel)]="formData.contact" name="contact" pattern="[0-9]{10}" placeholder="10-digit number" />
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+        <div *ngSwitchCase="'quote'">
+          <h3>Get Quotation for {{ currentCar?.name }}</h3>
+          <form (submit)="submitForm($event)">
+            <label for="name">Name:</label>
+            <input type="text" id="name" required [(ngModel)]="formData.name" name="name" />
+            <label for="contact">Contact Number:</label>
+            <input type="tel" id="contact" required [(ngModel)]="formData.contact" name="contact" pattern="[0-9]{10}" placeholder="10-digit number" />
+            <button type="submit">Submit</button>
+          </form>
+        </div>
+      </ng-container>
+    </div>
+    <button *ngIf="modalMode === 'info'" class="quotation-btn" (click)="modalMode = 'quote'">Get Quotation</button>
+  </div>
+</div>

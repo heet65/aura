@@ -1,0 +1,39 @@
+<div class="container">
+  <!-- Login Section -->
+  <div *ngIf="showLogin" class="form-section">
+    <h2>Login</h2>
+    <form (submit)="onLoginSubmit($event)">
+      <input type="email" placeholder="Email" required [(ngModel)]="loginEmail" name="loginEmail" />
+      <input type="password" placeholder="Password" required [(ngModel)]="loginPassword" name="loginPassword" />
+      <button type="submit">Login</button>
+    </form>
+    <button class="toggle-button" (click)="toggleForms()">New user? Create an account</button>
+  </div>
+
+  <!-- Signup Section -->
+  <div *ngIf="!showLogin && !vehicleSelection" class="form-section">
+    <h2>Sign Up</h2>
+    <form (submit)="onSignupSubmit($event)">
+      <input type="text" placeholder="Full Name" required [(ngModel)]="signupName" name="signupName" />
+      <input type="email" placeholder="Email" required [(ngModel)]="signupEmail" name="signupEmail" />
+      <input type="password" placeholder="Create Password" required [(ngModel)]="signupPassword" name="signupPassword" />
+      <button type="submit">Create Account</button>
+    </form>
+    <button class="toggle-button" (click)="toggleForms()">Already have an account? Login</button>
+  </div>
+
+  <!-- Vehicle Choice Section -->
+  <div *ngIf="vehicleSelection" class="vehicle-section">
+    <h2>Choose What You Want to Explore</h2>
+    <div class="choices">
+      <div class="choice" (click)="selectVehicle('Car')">
+        <img src="https://i.ibb.co/PsPYWZvW/car.jpg" alt="Vintage Car" />
+        <h3>Car</h3>
+      </div>
+      <div class="choice" (click)="selectVehicle('Bike')">
+        <img src="https://i.ibb.co/mr9D1LNJ/bike.jpg" alt="Vintage Bike" />
+        <h3>Bike</h3>
+      </div>
+    </div>
+  </div>
+</div>
